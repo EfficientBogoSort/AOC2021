@@ -13,7 +13,7 @@ def solve():
 
 
 # part 2
-"""
+
 def solve():
     with open("input.txt") as f:
         count = 0
@@ -117,4 +117,3 @@ def find_g2(nums, one, four, numDict):
     numDict[ret[1]] = '9'
     numDict[ret[2]] = '0'
 solve()
-"""
