@@ -16,21 +16,17 @@ def solve():
                 if c in openings:
                     stack.put(c)
                 else:
-                    d = stack.get()
-                    if c != comp[d]:
+                    if c != comp[stack.get()]:
                         errors.append(c)
                         stack = LifoQueue()
                         break
             if stack.qsize() != 0:
                 scores.append(get_score(stack))
             stack = LifoQueue()
-        tot = 0
-        for error in errors:
-            tot += vals[error]
+        tot = sum([vals[error] for error in errors])
 
         print("part 1:", tot)
         print("part 2:", sorted(scores)[int((len(scores) - 1) / 2)])
-
 def get_score(stack):
     vals = {')': 1, ']': 2, '}': 3, '>': 4}
     tot = 0
@@ -38,5 +34,3 @@ def get_score(stack):
         tot *= 5
         tot += vals[comp[stack.get()]]
     return tot
-
-solve()
