@@ -4,6 +4,7 @@ def solve():
         n_steps = 1000
         tot = 0
         flashed = set()
+        first_flash = -1
         for x in range(n_steps):
             flashed.clear()
             inp = [[x+1 for x in c] for c in inp]
@@ -20,34 +21,21 @@ def solve():
                             inp[y][v] = 0
                             flashed.add((v, y))
                 tot += flashes
-                if all_flashed(inp):
+                if all_flashed(inp) and first_flash == -1:
                     print("First time all flashed:", x)
+                    first_flash = x
         print("Total flashes:", tot)
 
 def infect(grid, x, y, flashed):
-
     # check for all octopi around the current octopus and increase their
     # energy if they haven't been increased in the current step
-    if x > 0:
-        # top left
-        if y > 0 and (x-1, y-1) not in flashed:
-            grid[y-1][x-1] += 1
-        if (x - 1, y) not in flashed:
-            grid[y][x-1] += 1
-        if y < len(grid) - 1 and (x-1, y+1) not in flashed:
-            grid[y+1][x-1] += 1
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if (j != 0 or i != 0) and (x + j, y + i) not in flashed \
+                    and 0 <= x + j < len(grid[0]) and 0 <= y + i < len(grid):
+                grid[y+i][x+j] += 1
 
-    if y > 0 and (x, y - 1) not in flashed:
-        grid[y-1][x] += 1
-    if y < len(grid) - 1 and (x, y + 1) not in flashed:
-        grid[y+1][x] += 1
-    if x < len(grid[0]) - 1:
-        if y > 0 and (x + 1, y - 1) not in flashed:
-            grid[y-1][x+1] += 1
-        if (x + 1, y) not in flashed:
-            grid[y][x+1] += 1
-        if y < len(grid) - 1 and (x + 1, y + 1) not in flashed:
-            grid[y+1][x+1] += 1
+
 def all_flashed(grid):
     # all octopi flash when all their energy is 0
     for x in grid:
