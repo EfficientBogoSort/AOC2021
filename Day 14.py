@@ -1,5 +1,4 @@
 from collections import defaultdict as dd
-from math import ceil
 def solve():
     with open("input.txt") as f:
         inp = list(f.readline().strip())
@@ -30,8 +29,9 @@ def solve():
         for key in curr:
             counts[key[0]] += curr[key] / 2
             counts[key[1]] += curr[key] / 2
-        # round up any counts
-        for key in counts:
-            counts[key] = ceil(counts[key])
+        # first and last element only counted once when reading the inital sequence of polymers, 
+        # so add 1 to each (0.5 here because I divided by two above)
+        counts[inp[0]] += .5
+        counts[inp[-1]] += .5
         print(max(counts.values()) - min(counts.values()))
 solve()
