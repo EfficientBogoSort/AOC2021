@@ -9,7 +9,9 @@ def solve():
         print("Max height is:", maxh)
         maxy = max(abs(y1), abs(y2))
         positions = 0
-        for x in range(abs(x2) + 1):
+        xbound1 = int(min(x2 + (x2/abs(x2)), 0))
+        xbound2 = int(max(x2 + (x2/abs(x2)), 0))
+        for x in range(xbound1, xbound2):
             for y in range(-maxy - 1, maxy+1):
                 land = land_in_area([x, y], x1, x2, y1, y2)
                 if land:
