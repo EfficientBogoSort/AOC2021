@@ -8,7 +8,7 @@ def solve():
         maxh = 0
         maxy = max(abs(y1), abs(y2))
         positions = 0
-        for x in range(-abs(x2) - 1, abs(x2) + 1):
+        for x in range(abs(x2) + 1):
             for y in range(-maxy - 1, maxy+1):
                 land, h = land_in_area([x, y], x1, x2, y1, y2)
                 maxh = max(h, maxh)
